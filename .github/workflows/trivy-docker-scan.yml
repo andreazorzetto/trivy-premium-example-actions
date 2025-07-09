@@ -7,13 +7,13 @@ on:
     branches: [ "main" ]
 
 env:
-  IMAGE_NAME: "my-repo/demo-local-build"
-  
+  IMAGE_NAME: "andreazorzetto/demo-trivy-scan"
+
   # Specific scanner tag or saas-latest
   SCANNER_VERSION: "2505.3.7"
 
   # Registry name as configured in Aqua integrations
-  IMAGE_REGISTRY_INTEGRATION: "Docker Hub"
+  IMAGE_REGISTRY_INTEGRATION: "dh-az-1"
 
 jobs:
 
