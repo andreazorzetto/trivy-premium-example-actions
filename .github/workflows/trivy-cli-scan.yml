@@ -7,9 +7,11 @@ on:
     branches: [ "main" ]
 
 env:
+  IMAGE_NAME: "demo-local-build"
+  SCANNER_VERSION: "saas-latest"
+
   # Registry name as configured in Aqua integrations
-  IMAGE_REGISTRY: "dh-az-1"
-  SCANNER_VERSION: "2405.22.9"
+  IMAGE_REGISTRY_INTEGRATION: "Docker Hub"
   
 
 jobs:
@@ -21,23 +23,28 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-demo-image:${{ github.sha }}
+      run: docker build . --file Dockerfile --tag $IMAGE_NAME:${{ github.sha }}
 
-      # The following 2 steps can be replaced building the scanner cli within the builder image
-    - name: Get Aquasec commercial scanner
+    # Downloading Trivy premium (Optionally use a mirrored binary)
+    - name: Get Aquasec Trivy Premium
       run: wget --user ${{ secrets.AQUAREG_USER }} --password ${{ secrets.AQUAREG_PSWD }} https://download.aquasec.com/scanner/$SCANNER_VERSION/scannercli
 
     - name: Executable permissions
       run: chmod +x scannercli
 
-    - name: Tag image with Registry
-      run: docker tag my-demo-image:${{ github.sha }} $IMAGE_REGISTRY/my-demo-image:${{ github.sha }}
 
       # Scanner authenticates to the server (-H) using a token (-A) but this can be replaced with user and password auth
       # image is registered if found compliant (--register-compliant) as belonging to the final registry (--registry).
       # the --local flag indicates a locally built image not available in the registry yet
     - name: Scan image
-      run: ./scannercli scan -H ${{ secrets.AQUA_SERVER }} -n -A ${{ secrets.TOKEN }} --local --text --register-compliant --registry $IMAGE_REGISTRY my-demo-image:${{ github.sha }}
+      run: ./scannercli scan -n \
+        -H ${{ secrets.AQUA_SERVER }} \
+        -A ${{ secrets.TOKEN }} \
+        --local \
+        --text \
+        --register-compliant \
+        --registry $IMAGE_REGISTRY_INTEGRATION \
+        $IMAGE_NAME:${{ github.sha }}
 
-    - name: Push to Registry
-      run: echo "docker push"
+    - name: Tag and Push to Registry
+      run: pass
