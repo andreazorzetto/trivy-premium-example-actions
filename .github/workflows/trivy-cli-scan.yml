@@ -8,7 +8,7 @@ on:
 
 env:
   IMAGE_NAME: "demo-local-build"
-  SCANNER_VERSION: "saas-latest"
+  SCANNER_VERSION: "latest-saas"
 
   # Registry name as configured in Aqua integrations
   IMAGE_REGISTRY_INTEGRATION: "Docker Hub"
