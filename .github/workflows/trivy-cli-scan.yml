@@ -10,10 +10,10 @@ env:
   IMAGE_NAME: "andreazorzetto/demo-trivy-scan"
 
   # Specific scanner tag or saas-latest
-  SCANNER_VERSION: "2505.3.7"
+  SCANNER_VERSION: "2506.2.10"
 
   # Registry name as configured in Aqua integrations
-  IMAGE_REGISTRY_INTEGRATION: "dh-az-1"
+  IMAGE_REGISTRY_INTEGRATION: "Docker Hub"
   
 
 jobs:
