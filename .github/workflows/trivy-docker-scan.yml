@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  IMAGE_NAME: "demo-local-build"
+  IMAGE_NAME: "my-repo/demo-local-build"
   SCANNER_VERSION: "latest-saas"
 
   # Registry name as configured in Aqua integrations
