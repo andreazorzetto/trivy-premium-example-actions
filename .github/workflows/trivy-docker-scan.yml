@@ -33,15 +33,7 @@ jobs:
       # image is registered if found compliant (--register-compliant) as belonging to the final registry (--registry).
       # the --local flag indicates a locally built image not available in the registry yet
     - name: Scan image
-      run: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-        registry.aquasec.com/scanner:$SCANNER_VERSION scan -n \
-        -H ${{ secrets.AQUA_SERVER }} \
-        -A ${{ secrets.TOKEN }} \
-        --local \
-        --text \
-        --register-compliant \
-        --registry $IMAGE_REGISTRY_INTEGRATION \
-        $IMAGE_NAME:${{ github.sha }}
+      run: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:$SCANNER_VERSION scan -n -H ${{ secrets.AQUA_SERVER }} -A ${{ secrets.TOKEN }} --local --text --register-compliant --registry $IMAGE_REGISTRY_INTEGRATION $IMAGE_NAME:${{ github.sha }}
 
 
     - name: Tag and Push to Registry
