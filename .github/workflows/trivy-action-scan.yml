@@ -1,0 +1,36 @@
+name: Scan with Aqua Security Action
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  IMAGE_NAME: "andreazorzetto/demo-trivy-scan"
+  IMAGE_REGISTRY_INTEGRATION: "Docker Hub"
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+    - name: Scan with Aqua Security
+      uses: andreazorzetto/trivy-premium-action@v1.0.0
+      with:
+        aqua-registry-username: ${{ secrets.AQUAREG_USER }}
+        aqua-registry-password: ${{ secrets.AQUAREG_PSWD }}
+        aqua-server: ${{ secrets.AQUA_SERVER }}
+        aqua-token: ${{ secrets.TOKEN }}
+        scan-ref: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+        image-registry-integration: ${{ env.IMAGE_REGISTRY_INTEGRATION }}
+        register-compliant: 'true'
+        scan-local: 'true'
+
+    - name: Tag and Push to Registry
+      run: pass
