@@ -31,3 +31,4 @@ jobs:
         image-registry-integration: ${{ env.IMAGE_REGISTRY_INTEGRATION }}
         register-compliant: 'true'
         scan-local: 'true'
+        format: 'sarif'
