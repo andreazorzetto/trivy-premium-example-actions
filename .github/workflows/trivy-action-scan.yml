@@ -33,4 +33,4 @@ jobs:
         scan-local: 'true'
 
     - name: Tag and Push to Registry
-      run: pass
+      run: "echo proceed"
