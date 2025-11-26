@@ -21,7 +21,7 @@ jobs:
       run: docker build . --file Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ github.sha }}
 
     - name: Scan with Aqua Security
-      uses: andreazorzetto/trivy-premium-action@v1.0.0
+      uses: andreazorzetto/trivy-premium-action@v1
       with:
         aqua-registry-username: ${{ secrets.AQUAREG_USER }}
         aqua-registry-password: ${{ secrets.AQUAREG_PSWD }}
