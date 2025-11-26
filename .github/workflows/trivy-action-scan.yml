@@ -25,7 +25,7 @@ jobs:
       with:
         aqua-registry-username: ${{ secrets.AQUAREG_USER }}
         aqua-registry-password: ${{ secrets.AQUAREG_PSWD }}
-        aqua-server: ${{ env.AQUA_SERVER }}
+        aqua-server: ${{ secrets.AQUA_SERVER }}
         aqua-token: ${{ secrets.TOKEN }}
         scan-ref: ${{ env.IMAGE_NAME }}:${{ github.sha }}
         image-registry-integration: ${{ env.IMAGE_REGISTRY_INTEGRATION }}
